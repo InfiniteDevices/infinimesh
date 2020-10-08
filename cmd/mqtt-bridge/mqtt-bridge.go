@@ -477,20 +477,14 @@ func schemaValidation(data []byte, version int) bool {
 	if version == 4 {
 		return true
 	}
-	var msg mqtt.IncomingMessage
-	err := json.Unmarshal(data, &msg)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "invalid message format")
-		return false
-	}
 	var payload mqtt.Payload
-	err = json.Unmarshal(msg.Data, &payload)
+	err := json.Unmarshal(data, &payload)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to deserialize payload")
 		return false
 	}
-	loader := gojsonschema.NewGoLoader(payload.Message[0])
-	schemaLoader := gojsonschema.NewReferenceLoader("file://pkg/schema-mqtt5.json")
+	loader := gojsonschema.NewGoLoader(payload)
+	schemaLoader := gojsonschema.NewReferenceLoader("file:///pkg/mqtt/schema-mqtt5.json")
 	result, err := gojsonschema.Validate(schemaLoader, loader)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Schema validation failed")
