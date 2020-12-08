@@ -23,6 +23,7 @@
     "less": "^2.7.3",
     "less-loader": "^4.1.0",
     "nuxt": "^2.14.3",
+    "nuxt-i18n": "^6.15.4",
     "typeface-exo": "0.0.61"
   },
   "devDependencies": {

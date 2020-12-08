@@ -53,6 +53,7 @@ module.exports = {
   modules: [
     "@nuxtjs/axios",
     "@nuxtjs/auth",
+    "nuxt-i18n",
     ["@nuxtjs/pwa", { meta: false, icon: false, manifest: false }]
   ],
   css: ["@/assets/main.css"],
@@ -96,5 +97,13 @@ module.exports = {
 
   publicRuntimeConfig: {
     baseURL: process.env.APISERVER_URL
+  },
+
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en',
+    }
   }
 };
