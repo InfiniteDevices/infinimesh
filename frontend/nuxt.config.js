@@ -100,10 +100,17 @@ module.exports = {
   },
 
   i18n: {
-    locales: ['en'],
     defaultLocale: 'en',
     vueI18n: {
       fallbackLocale: 'en',
-    }
+    },
+    lazy: true,
+    langDir: 'locale/',
+    locales: [
+      {
+        code: 'en',
+        file: 'en.js'
+      }
+    ],
   }
 };
