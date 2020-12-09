@@ -26,13 +26,13 @@ export default {
         .catch(res => {
           if (res.response.status == 404) {
             this.$notification.error({
-              message: "Device wasn't found",
-              description: "Redirecting..."
+              message: this.$t("device_control.not_found"),
+              description: this.$t("generics.redirect")
             });
           } else if (res.response.status == 403) {
             this.$notification.error({
-              message: "You have no access to this device",
-              description: "Redirecting..."
+              message: this.$t("device_control.no_access"),
+              description: this.$t("generics.redirect")
             });
           }
           this.$router.push({ name: "dashboard-devices" });
@@ -79,13 +79,13 @@ export default {
         method: "delete"
       })
         .then(() => {
-          this.$message.success("Device successfuly deleted!");
+          this.$message.success(this.$t("device_control.create_success"));
           this.$store.dispatch("devices/get");
           this.$router.push({ name: "dashboard-devices" });
         })
         .catch(e => {
           this.$notification.error({
-            message: "Error deleting device",
+            message: this.$t("device_control.create_error"),
             description: e.response.data.message
           });
         });
@@ -99,16 +99,12 @@ export default {
           refresh: refresh,
           success: () => {
             this.$message.success(
-              `Device successfuly ${
-                this.device.enabled ? "disabled" : "enabled"
-              }!`
+              this.$t("device_control.toogle_success", [device.enabled])
             );
           },
           error: () => {
             this.$notification.error({
-              message: `Error ${
-                device.enabled ? "disabling" : "enabling"
-              } device`,
+              message: this.$t("device_control.toogle_error", [device.enabled]),
               description: e.response.data.message
             });
           }

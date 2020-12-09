@@ -4,7 +4,8 @@ export default {
     username: "username",
     password_cap: "Password",
     login_cap: "Login",
-    oops: "Oops"
+    oops: "Oops",
+    redirect: "Redirecting..."
   },
 
   login_page: {
@@ -27,5 +28,15 @@ export default {
       `Account successfuly ${ctx.list(0) ? "disabled" : "enabled"}!`,
     toogle_error: ctx =>
       `Error ${ctx.list(0) ? "disabling" : "enabling"} account`
+  },
+  device_control: {
+    not_found: "Device wasn't found",
+    no_access: "You have no access to this device",
+    create_success: "Device successfuly deleted!",
+    create_error: "Error deleting device!",
+    toogle_success: ctx =>
+      `Device successfuly ${ctx.list(0) ? "disabled" : "enabled"}!`,
+    toogle_error: ctx =>
+      `Error ${ctx.list(0) ? "disabling" : "enabling"} device!`
   }
 };
