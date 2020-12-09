@@ -100,17 +100,23 @@ module.exports = {
   },
 
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: "en",
     vueI18n: {
-      fallbackLocale: 'en',
+      fallbackLocale: "en"
     },
     lazy: true,
-    langDir: 'locale/',
+    langDir: "locale/",
     locales: [
       {
-        code: 'en',
-        file: 'en.js'
+        code: "en",
+        file: "en.js"
       }
     ],
+    strategy: "no_prefix",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "inf_console_lang",
+      onlyOnRoot: false
+    }
   }
 };
