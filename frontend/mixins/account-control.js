@@ -9,14 +9,14 @@ export default {
         .catch(e => {
           if (e.response.status === 403) {
             vm.$notification.error({
-              message: "Oops",
+              message: vm.$t("oops"),
               description: e.response.data.message
             });
             vm.$store.commit("window/noAccess", "dashboard-accounts");
             vm.$router.push({ name: "dashboard-devices" });
           } else if (e.response.status === 500) {
             vm.$notification.error({
-              message: "Internal Server Error",
+              message: vm.$t("internal.server_error"),
               description: e.response.data.message
             });
           }
@@ -30,12 +30,12 @@ export default {
         method: "delete"
       })
         .then(() => {
-          vm.$message.success("Account successfuly deleted!");
+          vm.$message.success(vm.$t("account_control.delete_success"));
           vm.getAccountsPool();
         })
         .catch(e => {
           vm.$notification.error({
-            message: "Error deleting account " + account.name,
+            message: vm.$t("account_control.delete_error", [account.name]),
             description: e.response.data.message
           });
         });
@@ -46,8 +46,8 @@ export default {
         {
           enabled: !account.enabled
         },
-        `Account successfuly ${account.enabled ? "disabled" : "enabled"}!`,
-        `Error ${account.enabled ? "disabling" : "enabling"} account`
+        this.$t("account_control.toogle_success", [account.enabled]),
+        this.$t("account_control.toogle_error", [account.enabled])
       );
     },
     handleAccountAdd(account) {
@@ -60,15 +60,17 @@ export default {
       })
         .then(() => {
           vm.$notification.success({
-            message: "Account created successfuly"
+            message: vm.$t("account_control.create_success")
           });
           vm.createAccountDrawerVisible = false;
           vm.getAccountsPool();
         })
         .catch(err => {
           this.$notification.error({
-            message: "Failed to create an account",
-            description: `Response: ${err.response.data.message}`,
+            message: vm.$t("account_control.create_error"),
+            description: vm.$t("internal.response", [
+              err.response.data.message
+            ]),
             duration: 10
           });
         });
