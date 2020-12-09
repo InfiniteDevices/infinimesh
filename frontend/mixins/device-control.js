@@ -79,13 +79,13 @@ export default {
         method: "delete"
       })
         .then(() => {
-          this.$message.success(this.$t("device_control.create_success"));
+          this.$message.success(this.$t("device_control.delete_success"));
           this.$store.dispatch("devices/get");
           this.$router.push({ name: "dashboard-devices" });
         })
         .catch(e => {
           this.$notification.error({
-            message: this.$t("device_control.create_error"),
+            message: this.$t("device_control.delete_error"),
             description: e.response.data.message
           });
         });

@@ -9,7 +9,7 @@
       <template>
         <a-col>
           <a-input
-            placeholder="Search device..."
+            :placeholder="$t('devices_page.search_placeholder')"
             class="devices-search-input"
             :allowClear="true"
             v-model="searchQuery"
@@ -19,11 +19,21 @@
               class="device-search-prefix"
               v-model="searchKey"
             >
-              <a-select-option value="all"> Everywhere </a-select-option>
-              <a-select-option value="name"> Names </a-select-option>
-              <a-select-option value="id"> IDs </a-select-option>
-              <a-select-option value="tags"> Tags </a-select-option>
-              <a-select-option value="namespace"> Namespace </a-select-option>
+              <a-select-option value="all">
+                {{ $t("search_options.all") }}
+              </a-select-option>
+              <a-select-option value="name">
+                {{ $t("search_options.name") }}
+              </a-select-option>
+              <a-select-option value="id">
+                {{ $t("search_options.id") }}
+              </a-select-option>
+              <a-select-option value="tags">
+                {{ $t("search_options.tags") }}
+              </a-select-option>
+              <a-select-option value="namespace">
+                {{ $t("search_options.namespace") }}
+              </a-select-option>
             </a-select>
           </a-input>
         </a-col>
@@ -32,8 +42,8 @@
             <a-col>
               <a-switch
                 id="group-by-tags-switch"
-                un-checked-children="Group by tags"
-                checked-children="Whole registry"
+                :un-checked-children="$t('devices_page.group_by_tags')"
+                :checked-children="$t('devices_page.whole_registry')"
                 v-model="groupByTags"
               />
             </a-col>
@@ -44,7 +54,7 @@
       <template v-if="selectedDevices.length">
         <a-col>
           <a-button type="link" @click="selectedDevices = []" icon="close"
-            >Deselect all
+            >{{ $t("generics.deselect_all") }}
           </a-button>
         </a-col>
         <a-col>
@@ -52,10 +62,10 @@
             type="success"
             style="margin-right: 5px"
             @click="toogleSelected(true)"
-            >Enable All
+            >{{ $t("devices_page.enable_all") }}
           </a-button>
           <a-button type="danger" @click="toogleSelected(false)"
-            >Disable All
+            >{{ $t("devices_page.disable_all") }}
           </a-button>
         </a-col>
       </template>
@@ -64,7 +74,7 @@
           <a-button
             type="success"
             @click="selectedDevices = suggested.map((d) => d.id)"
-            >Select All
+            >{{ $t("generics.select_all") }}
           </a-button>
         </a-col>
       </template>
@@ -97,7 +107,7 @@
                     .map((d) => d.id)
                 )
               "
-              >Select All
+              >{{ $t("generics.select_all") }}
             </a-button>
           </div>
 
@@ -148,12 +158,10 @@
         >
           <h3 style="padding: 15px">
             <p>
-              You can't create devices in your root namespace, switch to another
-              one to perform device create.
+              {{ $t("devices_page.root_ns_msg") }}
             </p>
             <p>
-              Click here to create new namespace, or switch namespace on top of
-              the page.
+              {{ $t("devices_page.create_or_switch_ns_msg") }}
             </p>
           </h3>
         </nuxt-link>
@@ -290,8 +298,10 @@ export default {
         device: device,
         error: (err) => {
           this.$notification.error({
-            message: "Failed to create the device",
-            description: `Response: ${err.response.data.message}`,
+            message: this.$t("device_control.create_error"),
+            description: this.$t("internal.response", [
+              err.response.data.message,
+            ]),
             duration: 10,
           });
         },
@@ -321,10 +331,14 @@ export default {
               }
             );
             vm.$notification.info({
-              message: `${enable ? "Enabled" : "Disabled"} ${
-                response.length
-              } devices`,
-              description: `Result: success - ${res.success}, failed: ${res.fail}.`,
+              message: vm.$t("device_control.toogle_multiple", [
+                enable,
+                response.length,
+              ]),
+              description: vm.$t("internal.response_multiple", [
+                res.success,
+                res.fail,
+              ]),
             });
           },
         }
