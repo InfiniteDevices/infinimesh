@@ -10,8 +10,7 @@
             type="flex"
             justify="center"
             style="color: var(--logo-color); opacity: 0.65; text-align: center"
-            >Welcome to infinimesh. Log in with your username and
-            password.</a-row
+            >{{ $t("login_page_welcome_msg") }}</a-row
           >
 
           <a-row style="margin-top: 1rem">
@@ -24,12 +23,12 @@
                       rules: [
                         {
                           required: true,
-                          message: 'Please input your E-Mail',
+                          message: $t('input_email_placeholder'),
                         },
                       ],
                     },
                   ]"
-                  placeholder="Username"
+                  :placeholder="$t('username_cap')"
                 >
                   <a-icon
                     slot="prefix"
@@ -46,13 +45,13 @@
                       rules: [
                         {
                           required: true,
-                          message: 'Please input your password',
+                          message: $t('input_pass_placeholder'),
                         },
                       ],
                     },
                   ]"
                   type="password"
-                  placeholder="Password"
+                  :placeholder="$t('password_cap')"
                 >
                   <a-icon
                     slot="prefix"
@@ -69,8 +68,11 @@
                 ></a-progress>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary" html-type="submit" style="width: 100%"
-                  >Login</a-button
+                <a-button
+                  type="primary"
+                  html-type="submit"
+                  style="width: 100%"
+                  >{{ $t("login_cap") }}</a-button
                 >
               </a-form-item>
             </a-form>
@@ -101,10 +103,11 @@ export default {
     this.$notification.info({
       placement: "bottomRight",
       duration: 0,
-      message: "No account yet? Please contact us! Click here",
+      message: this.$t("no_account_msg"),
       bottom: "42px",
-      onClick: () => window.open("https://infinitedevices.de/en/contact/", "target-new")
-    })
+      onClick: () =>
+        window.open("https://infinitedevices.de/en/contact/", "target-new"),
+    });
   },
   methods: {
     handleSubmit(e) {
