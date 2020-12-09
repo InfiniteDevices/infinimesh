@@ -10,7 +10,7 @@
             type="flex"
             justify="center"
             style="color: var(--logo-color); opacity: 0.65; text-align: center"
-            >{{ $t("login_page_welcome_msg") }}</a-row
+            >{{ $t("login_page.welcome_msg") }}</a-row
           >
 
           <a-row style="margin-top: 1rem">
@@ -23,12 +23,12 @@
                       rules: [
                         {
                           required: true,
-                          message: $t('input_email_placeholder'),
+                          message: $t('login_page.input_email_placeholder'),
                         },
                       ],
                     },
                   ]"
-                  :placeholder="$t('username_cap')"
+                  :placeholder="$t('generics.username_cap')"
                 >
                   <a-icon
                     slot="prefix"
@@ -45,13 +45,13 @@
                       rules: [
                         {
                           required: true,
-                          message: $t('input_pass_placeholder'),
+                          message: $t('login_page.input_pass_placeholder'),
                         },
                       ],
                     },
                   ]"
                   type="password"
-                  :placeholder="$t('password_cap')"
+                  :placeholder="$t('generics.password_cap')"
                 >
                   <a-icon
                     slot="prefix"
@@ -72,7 +72,7 @@
                   type="primary"
                   html-type="submit"
                   style="width: 100%"
-                  >{{ $t("login_cap") }}</a-button
+                  >{{ $t("generics.login_cap") }}</a-button
                 >
               </a-form-item>
             </a-form>
@@ -103,7 +103,7 @@ export default {
     this.$notification.info({
       placement: "bottomRight",
       duration: 0,
-      message: this.$t("no_account_msg"),
+      message: this.$t("login_page.no_account_msg"),
       bottom: "42px",
       onClick: () =>
         window.open("https://infinitedevices.de/en/contact/", "target-new"),
