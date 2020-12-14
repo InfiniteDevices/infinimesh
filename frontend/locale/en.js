@@ -31,22 +31,22 @@ export default {
   },
   internal: {
     server_error: "Internal Server Error",
-    response: `Response: {message}`,
-    response_multiple: `Result: success - {success}, failed: {fail}.`
+    response: "Response: {message}",
+    response_multiple: "Result: success - {success}, failed: {fail}."
   },
   account_control: {
     create_success: "Account successfuly created!",
     create_error: "Failed to create an account",
     delete_success: "Account successfuly deleted!",
-    delete_error: `Error deleting account {name}`,
-    toogle_success: `Account successfuly {res}!`,
-    toogle_error: `Error while {res} account`
+    delete_error: "Error deleting account {name}",
+    toogle_success: "Account successfuly {res}!",
+    toogle_error: "Error while {res} account"
   },
   accounts_page: {
     accounts: "Accounts",
     create_account: "Create Account",
-    user_rights_b: `User`,
-    user_rights_e: `admin rights`,
+    user_rights_b: "User",
+    user_rights_e: "admin rights",
     user_rights_def: "has",
     user_rights_def_neg: "has no",
     toogle_rights: "Make {not}Admin",
@@ -64,11 +64,9 @@ export default {
     update_error: "Error updating device!",
     delete_success: "Device successfuly deleted!",
     delete_error: "Error deleting device!",
-    toogle_multiple: `{res} {len} devices!`,
-    toogle_success: `Device successfuly ${
-      ctx.list(0) ? "disabled" : "enabled"
-    }!`,
-    toogle_error: `Error {res} device!`
+    toogle_multiple: "{res} {len} devices!",
+    toogle_success: "Device successfuly {res}!",
+    toogle_error: "Error {res} device!"
   },
   devices_page: {
     search_placeholder: "Search device",
@@ -86,7 +84,7 @@ export default {
     namespace: "Namespace",
     loading: "Loading device",
     name_placeholder: "Enter new device name",
-    state: `Device is {not}enabled`,
+    state: "Device is {not}enabled",
     tags: "Tags",
     no_tags: "No tags were provided",
     tags_placeholder: "Enter a comma-separated list of tags, e.g. tag1, tag2",
@@ -109,18 +107,18 @@ export default {
     ns_name_placeholder: "Enter new name",
     delete_ns_hint:
       "Namespace and its devices won't be deleted immeadeatly, but after two weeks",
-    deleted_warn_msg: `Going to be deleted on {date}, click to restore`,
+    deleted_warn_msg: "Going to be deleted on {date}, click to restore",
 
     ns_create_success: "Namespace successfuly created!",
     ns_create_error: "Failed to create a namespace!",
 
     ns_rename_success: "Namespace successfuly renamed!",
-    ns_rename_error: `Error renaming namespace {name}!`,
+    ns_rename_error: "Error renaming namespace {name}!",
 
     ns_delete_success: "Namespace successfuly deleted!",
-    ns_delete_error: `Error deleting namespace {name}!`,
+    ns_delete_error: "Error deleting namespace {name}!",
 
     ns_restore_success: "Namespace successfuly restored!",
-    ns_restore_error: `Error restoring namespace {name}!`
+    ns_restore_error: "Error restoring namespace {name}!"
   }
 };
