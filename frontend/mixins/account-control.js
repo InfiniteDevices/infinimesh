@@ -9,7 +9,7 @@ export default {
         .catch(e => {
           if (e.response.status === 403) {
             vm.$notification.error({
-              message: vm.$t("oops"),
+              message: vm.$t("generics.oops"),
               description: e.response.data.message
             });
             vm.$store.commit("window/noAccess", "dashboard-accounts");
