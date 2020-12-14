@@ -81,9 +81,9 @@
 
                   <a-tooltip
                     v-if="namespace.markfordeletion"
-                    :title="`Going to be deleted ${deletionTime(
-                      namespace
-                    )}, click to restore`"
+                    :title="
+                      $t('namespaces.deleted_warn_msg', deletionTime(namespace))
+                    "
                     placement="left"
                   >
                     <a-button type="link" @click="restoreNamespace(namespace)">
@@ -96,7 +96,7 @@
                   <a-tooltip
                     v-else
                     placement="left"
-                    title="Namespace and its devices won't be deleted immeadeatly, but after two weeks"
+                    :title="$t('namespaces.delete_ns_hint')"
                   >
                     <a-button type="link" @click="deleteNamespace(namespace)">
                       <a-icon
@@ -201,11 +201,11 @@ export default {
         { name: ns.name },
         {
           success: () => {
-            vm.$message.success("Namespace successfuly renamed!");
+            vm.$message.success(vm.$t("namespaces.ns_rename_success"));
           },
           error: (e) => {
             vm.$notification.error({
-              message: "Error renaming namespace " + namespace.name,
+              message: vm.$t("namespaces.ns_rename_error", namespace.name),
               description: e.response.data.message,
             });
           },
@@ -222,12 +222,12 @@ export default {
         method: "delete",
       })
         .then(() => {
-          vm.$message.success("Namespace successfuly deleted!");
+          vm.$message.success(vm.$t("namespaces.ns_rename_success"));
           vm.getNamespacesPool();
         })
         .catch((e) => {
           vm.$notification.error({
-            message: "Error deleting namespace " + namespace.name,
+            message: vm.$t("namespaces.ns_delete_error", namespace.name),
             description: e.response.data.message,
           });
         });
@@ -241,11 +241,11 @@ export default {
         },
         {
           success: () => {
-            vm.$message.success("Namespace successfuly restored!");
+            vm.$message.success(vm.$t("namespaces.ns_restore_success"));
           },
           error: (e) => {
             vm.$notification.error({
-              message: "Error restoring namespace " + namespace.name,
+              message: vm.$t("namespaces.ns_restore_error", namespace.name),
               description: e.response.data.message,
             });
           },
@@ -269,15 +269,15 @@ export default {
       })
         .then(() => {
           vm.$notification.success({
-            message: "Namespace created successfuly",
+            message: vm.$t("namespaces.ns_create_success"),
           });
           vm.createNamespaceDrawerVisible = false;
           vm.getNamespacesPool();
         })
         .catch((err) => {
-          this.$notification.error({
-            message: "Failed to create a namespace",
-            description: `Response: ${err.response.data.message}`,
+          vm.$notification.error({
+            message: vm.$t("namespaces.ns_create_error"),
+            description: vm.$t("internal.response", err.response.data.message),
             duration: 10,
           });
         });
@@ -285,7 +285,7 @@ export default {
     deletionTime(namespace) {
       let delete_init_date = new Date(namespace.deleteinitiationtime);
       delete_init_date.setDate(delete_init_date.getDate() + 14);
-      return "on " + delete_init_date;
+      return delete_init_date;
     },
   },
 };

@@ -84,5 +84,26 @@ export default {
     id: "IDs",
     tags: "Tags",
     namespace: "Namespace"
+  },
+  namespaces: {
+    title: "Namespaces",
+    create_ns: "Create Namespace",
+    ns_name_placeholder: "Enter new name",
+    delete_ns_hint:
+      "Namespace and its devices won't be deleted immeadeatly, but after two weeks",
+    deleted_warn_msg: ctx =>
+      `Going to be deleted on ${ctx.list(0) /** date */}, click to restore`,
+
+    ns_create_success: "Namespace successfuly created!",
+    ns_create_error: "Failed to create a namespace!",
+
+    ns_rename_success: "Namespace successfuly renamed!",
+    ns_rename_error: ctx => `Error renaming namespace ${cts.list(0)}!`,
+
+    ns_delete_success: "Namespace successfuly deleted!",
+    ns_delete_error: ctx => `Error deleting namespace ${cts.list(0)}!`,
+
+    ns_restore_success: "Namespace successfuly restored!",
+    ns_restore_error: ctx => `Error restoring namespace ${cts.list(0)}!`
   }
 };
