@@ -37,7 +37,7 @@
         >
           <a-row type="flex" justify="end">
             <a-tooltip
-              :title="$t('device.state', device.enabled)"
+              :title="$t('device.state', { not: device.enabled ? '' : 'not ' })"
               placement="right"
             >
               <transition name="fade">

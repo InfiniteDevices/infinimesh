@@ -82,7 +82,9 @@
                   <a-tooltip
                     v-if="namespace.markfordeletion"
                     :title="
-                      $t('namespaces.deleted_warn_msg', deletionTime(namespace))
+                      $t('namespaces.deleted_warn_msg', {
+                        date: deletionTime(namespace),
+                      })
                     "
                     placement="left"
                   >
@@ -205,7 +207,7 @@ export default {
           },
           error: (e) => {
             vm.$notification.error({
-              message: vm.$t("namespaces.ns_rename_error", namespace.name),
+              message: vm.$t("namespaces.ns_rename_error", namespace),
               description: e.response.data.message,
             });
           },
@@ -227,7 +229,7 @@ export default {
         })
         .catch((e) => {
           vm.$notification.error({
-            message: vm.$t("namespaces.ns_delete_error", namespace.name),
+            message: vm.$t("namespaces.ns_delete_error", namespace),
             description: e.response.data.message,
           });
         });
@@ -245,7 +247,7 @@ export default {
           },
           error: (e) => {
             vm.$notification.error({
-              message: vm.$t("namespaces.ns_restore_error", namespace.name),
+              message: vm.$t("namespaces.ns_restore_error", namespace),
               description: e.response.data.message,
             });
           },
@@ -277,7 +279,7 @@ export default {
         .catch((err) => {
           vm.$notification.error({
             message: vm.$t("namespaces.ns_create_error"),
-            description: vm.$t("internal.response", err.response.data.message),
+            description: vm.$t("internal.response", err.response.data),
             duration: 10,
           });
         });

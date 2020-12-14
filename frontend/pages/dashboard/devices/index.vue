@@ -299,9 +299,7 @@ export default {
         error: (err) => {
           this.$notification.error({
             message: this.$t("device_control.create_error"),
-            description: this.$t("internal.response", [
-              err.response.data.message,
-            ]),
+            description: this.$t("internal.response", err.response.data),
             duration: 10,
           });
         },
@@ -331,14 +329,11 @@ export default {
               }
             );
             vm.$notification.info({
-              message: vm.$t("device_control.toogle_multiple", [
-                enable,
-                response.length,
-              ]),
-              description: vm.$t("internal.response_multiple", [
-                res.success,
-                res.fail,
-              ]),
+              message: vm.$t("device_control.toogle_multiple", {
+                res: enable ? "Enabled" : "Disabled",
+                len: reponse.length,
+              }),
+              description: vm.$t("internal.response_multiple", res),
             });
           },
         }

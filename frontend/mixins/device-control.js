@@ -99,7 +99,9 @@ export default {
           refresh: refresh,
           success: () => {
             this.$message.success(
-              this.$t("device_control.toogle_success", [device.enabled])
+              this.$t("device_control.toogle_success", {
+                res: device.enabled ? "disabling" : "enabling"
+              })
             );
           },
           error: () => {

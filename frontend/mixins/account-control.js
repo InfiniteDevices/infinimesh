@@ -35,7 +35,7 @@ export default {
         })
         .catch(e => {
           vm.$notification.error({
-            message: vm.$t("account_control.delete_error", [account.name]),
+            message: vm.$t("account_control.delete_error", account.name),
             description: e.response.data.message
           });
         });
@@ -46,8 +46,12 @@ export default {
         {
           enabled: !account.enabled
         },
-        this.$t("account_control.toogle_success", [account.enabled]),
-        this.$t("account_control.toogle_error", [account.enabled])
+        this.$t("account_control.toogle_success", {
+          res: account.enabled ? "disabled" : "enabled"
+        }),
+        this.$t("account_control.toogle_error", {
+          res: account.enabled ? "disabling" : "enabling"
+        })
       );
     },
     handleAccountAdd(account) {
@@ -68,9 +72,7 @@ export default {
         .catch(err => {
           this.$notification.error({
             message: vm.$t("account_control.create_error"),
-            description: vm.$t("internal.response", [
-              err.response.data.message
-            ]),
+            description: vm.$t("internal.response", err.response.data),
             duration: 10
           });
         });
