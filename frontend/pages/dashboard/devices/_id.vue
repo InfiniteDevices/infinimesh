@@ -4,7 +4,7 @@
       :spinning="!device || !device.name"
       style="min-height: 15rem"
       size="large"
-      tip="Loading device..."
+      :tip="$t('device.loading') + '...'"
     >
       <a-row style="padding-top: 10px">
         <a-col
@@ -23,7 +23,7 @@
           </transition>
           <a-input
             v-if="device && active_edit"
-            placeholder="Enter new device name"
+            :placeholder="$t('device.name_placeholder')"
             class="device-name-input"
             v-model="device.name"
           />
@@ -37,9 +37,7 @@
         >
           <a-row type="flex" justify="end">
             <a-tooltip
-              :title="
-                device.enabled ? 'Device enabled' : 'Device is not enabled'
-              "
+              :title="$t('device.state', device.enabled)"
               placement="right"
             >
               <transition name="fade">
@@ -66,18 +64,18 @@
           <transition-group name="slide">
             <a-card key="details" v-if="device" hoverable>
               <a-row slot="title" type="flex" justify="space-between">
-                <a-col :span="3"> Details </a-col>
+                <a-col :span="3"> {{ $t("device.details") }} </a-col>
                 <a-col :xxl="5" :lg="6" :md="9" :sm="10" v-if="active_edit">
                   <a-space>
                     <a-button
                       type="primary"
                       icon="close"
                       @click="active_edit = false"
-                      >Cancel</a-button
+                      >{{ $t("generics.cancel") }}</a-button
                     >
-                    <a-button type="success" icon="save" @click="patchDevice"
-                      >Save</a-button
-                    >
+                    <a-button type="success" icon="save" @click="patchDevice">{{
+                      $t("generics.save")
+                    }}</a-button>
                   </a-space>
                 </a-col>
                 <a-col :lg="2" :md="3" :sm="4" v-else>
@@ -85,7 +83,7 @@
                     type="primary"
                     icon="edit"
                     @click="active_edit = true"
-                    >Edit</a-button
+                    >{{ $t("generics.edit") }}</a-button
                   >
                 </a-col>
               </a-row>
@@ -95,12 +93,12 @@
                   :token-separators="[',']"
                   v-model="device.tags"
                   style="min-width: 50%; margin: 15px 0"
-                  placeholder="Enter a comma-separated list of tags, e.g. tag1, tag2"
+                  :placeholder="$t('device.tags_placeholder')"
                 />
               </template>
               <template v-else>
                 <a-row v-if="device.tags && device.tags.length">
-                  <a-col :span="2">Tags:</a-col>
+                  <a-col :span="2">{{ $t("device.tags") }}:</a-col>
                   <a-col :span="22">
                     <a-tag
                       v-for="tag in device.tags"
@@ -111,17 +109,22 @@
                   </a-col>
                 </a-row>
                 <a-row v-else type="flex" justify="center" class="muted">
-                  <p>No tags were provided</p>
+                  <p>{{ $t("device.no_tags") }}</p>
                 </a-row>
               </template>
               <template>
                 <p>
-                  Namespace:
+                  {{ $t("device.namespace") }}:
                   <u>{{ device.namespace }}</u>
                 </p>
               </template>
             </a-card>
-            <a-card title="Actions" key="actions" v-if="device" hoverable>
+            <a-card
+              :title="$t('device.actions')"
+              key="actions"
+              v-if="device"
+              hoverable
+            >
               <device-actions
                 :device="device"
                 @delete="handleDeviceDelete"
@@ -129,7 +132,7 @@
               />
             </a-card>
             <a-card
-              title="State"
+              :title="$t('device.state_slug')"
               key="state"
               v-if="device && device.state"
               hoverable
@@ -137,13 +140,13 @@
               <a-row>
                 <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
                   <device-state
-                    title="Reported"
+                    :title="$t('device.state_reported')"
                     :state="device.state.shadow.reported"
                   />
                 </a-col>
                 <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" :xxl="12">
                   <device-state
-                    title="Desired"
+                    :title="$t('device.state_desired')"
                     :state="device.state.shadow.desired"
                     :editable="true"
                     @update="handleStateUpdate"
@@ -229,11 +232,11 @@ export default {
         {
           refresh: true,
           success: () => {
-            this.$message.success(`Device successfuly updated!`);
+            this.$message.success(this.$t("device_control.update_success"));
           },
           error: (e) => {
             this.$notification.error({
-              message: `Error updating device`,
+              message: this.$t("device_control.update_error"),
               description: e.response.data.message,
             });
           },

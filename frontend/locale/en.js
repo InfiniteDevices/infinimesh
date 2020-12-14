@@ -7,7 +7,10 @@ export default {
     oops: "Oops",
     redirect: "Redirecting...",
     select_all: "Select All",
-    deselect_all: "Deselect All"
+    deselect_all: "Deselect All",
+    save: "Save",
+    cancel: "Cancel",
+    edit: "Edit"
   },
 
   login_page: {
@@ -38,6 +41,8 @@ export default {
     no_access: "You have no access to this device",
     create_success: "",
     create_error: "Failed to create the device",
+    update_success: "Device successfuly updated!",
+    update_error: "Error updating device!",
     delete_success: "Device successfuly deleted!",
     delete_error: "Error deleting device!",
     toogle_multiple: ctx =>
@@ -58,6 +63,20 @@ export default {
       "You can't create devices in your root namespace, switch to another one to perform device create.",
     create_or_switch_ns_msg:
       "Click here to create new namespace, or switch namespace on top of the page."
+  },
+  device: {
+    namespace: "Namespace",
+    loading: "Loading device",
+    name_placeholder: "Enter new device name",
+    state: ctx => `Device is ${ctx.list(0) ? "" : "not"} enabled`,
+    tags: "Tags",
+    no_tags: "No tags were provided",
+    tags_placeholder: "Enter a comma-separated list of tags, e.g. tag1, tag2",
+    state_reported: "Reported",
+    state_desired: "Desired",
+    state_slug: "State",
+    details: "Details",
+    actions: "Actions"
   },
   search_options: {
     all: "Everywhere",
