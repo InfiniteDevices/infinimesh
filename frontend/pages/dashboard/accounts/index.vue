@@ -4,7 +4,7 @@
       <a-col :span="21" :offset="1">
         <a-row type="flex" align="middle" justify="space-between">
           <a-col>
-            <h1 class="lead">Accounts</h1>
+            <h1 class="lead">{{ $t("accounts_page.accounts") }}</h1>
           </a-col>
           <a-col>
             <a-row type="flex" justify="end">
@@ -12,7 +12,7 @@
                 type="primary"
                 icon="plus"
                 @click="createAccountDrawerVisible = true"
-                >Create Account</a-button
+                >{{ $t("accounts_page.create_account") }}</a-button
               >
             </a-row>
             <account-add
@@ -49,10 +49,21 @@
             <a-row type="flex" justify="space-around">
               <a-tooltip>
                 <span slot="title">
-                  User <u v-if="is_admin"> has </u
-                  ><template v-else> has <u>no</u></template> admin rights
+                  {{ $t("accounts_page.user_rights_b") }}
+                  <u>{{
+                    $t(
+                      is_admin
+                        ? "accounts_page.user_rights_def"
+                        : "accounts_page.user_rights_def_neg"
+                    )
+                  }}</u>
+                  {{ $t("accounts_page.user_rights_e") }}
                 </span>
-                {{ is_admin ? "Admin" : "User" }}
+                {{
+                  is_admin
+                    ? $t("accounts_page.admin")
+                    : $t("accounts_page.user")
+                }}
               </a-tooltip>
             </a-row>
           </span>
@@ -69,23 +80,31 @@
               <a-button type="link" icon="menu" />
               <a-menu slot="overlay">
                 <a-menu-item>
-                  <a-button type="link" @click="resetAccountPassword(account)"
-                    >Reset password</a-button
+                  <a-button
+                    type="link"
+                    @click="resetAccountPassword(account)"
+                    >{{ $t("generics.reset_password") }}</a-button
                   >
                 </a-menu-item>
-                <a-menu-item @click="toogleAdmin(account)" v-if="user.is_root">
+                <a-menu-item @click="toogleAdmin(account)">
                   <a-button type="link">
-                    {{ account.is_admin ? "Make not Admin" : "Make Admin" }}
+                    {{
+                      $t("accounts_page.toogle_rights", {
+                        not: account.is_admin ? "not " : "",
+                      })
+                    }}
                   </a-button>
                 </a-menu-item>
                 <a-menu-item>
                   <a-button type="link" @click="toogleAccount(account)">{{
-                    account.enabled ? "Disable" : "Enable"
+                    account.enabled
+                      ? $t("generics.disable")
+                      : $t("generics.enable")
                   }}</a-button>
                 </a-menu-item>
                 <a-menu-item>
                   <a-button type="link" @click="deleteAccount(account)">
-                    Delete
+                    {{ $t("generics.delete") }}
                   </a-button>
                 </a-menu-item>
               </a-menu>
@@ -155,6 +174,7 @@ export default {
     },
   },
   data() {
+    columns[0].title = this.$t("generics.username_cap");
     return {
       columns,
       accounts: [],
@@ -171,13 +191,18 @@ export default {
   },
   methods: {
     toogleAdmin(account) {
-      this.updateAccount(
+      const vm = this;
+      vm.updateAccount(
         account.uid,
         { is_admin: !account.is_admin },
-        `User ${account.name} is now ${account.is_admin ? "not " : ""}Admin`,
-        `Failed to make user ${account.name} ${
-          account.is_admin ? "" : "not "
-        }admin`
+        vm.$t("accounts_page.toogle_rights_success", {
+          name: account.name,
+          q: account.is_admin ? "not " : "",
+        }),
+        vm.$t("accounts_page.toogle_rights_error", {
+          name: account.name,
+          q: account.is_admin ? "" : "not ",
+        })
       );
     },
     resetAccountPassword(account) {
@@ -189,8 +214,8 @@ export default {
       this.updateAccount(
         this.selectedAccount.uid,
         { password: password },
-        "Password changed successfuly",
-        "Reset password failed"
+        this.$t("generics.reset_password_success"),
+        this.$t("generics.reset_password_error")
       );
     },
   },

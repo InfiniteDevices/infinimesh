@@ -10,7 +10,16 @@ export default {
     deselect_all: "Deselect All",
     save: "Save",
     cancel: "Cancel",
-    edit: "Edit"
+    edit: "Edit",
+    enable: "Enable",
+    disable: "Disable",
+    delete: "Delete",
+    admin: "Admin",
+    enabled: "Enabled",
+    actions: "Actions",
+    reset_password: "Reset password",
+    reset_password_success: "Password changed successfuly",
+    reset_password_error: "Reset password failed"
   },
 
   login_page: {
@@ -35,6 +44,19 @@ export default {
       `Account successfuly ${ctx.list(0) ? "disabled" : "enabled"}!`,
     toogle_error: ctx =>
       `Error ${ctx.list(0) ? "disabling" : "enabling"} account`
+  },
+  accounts_page: {
+    accounts: "Accounts",
+    create_account: "Create Account",
+    user_rights_b: `User`,
+    user_rights_e: `admin rights`,
+    user_rights_def: "has",
+    user_rights_def_neg: "has no",
+    toogle_rights: "Make {not}Admin",
+    toogle_rights_success: "User {name} is now {q}Admin",
+    toogle_rights_error: "Failed to make user {name} {q}Admin",
+    user: "User",
+    admin: "Admin"
   },
   device_control: {
     not_found: "Device wasn't found",
