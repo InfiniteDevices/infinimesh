@@ -83,7 +83,7 @@
                   <a-button
                     type="link"
                     @click="resetAccountPassword(account)"
-                    >{{ $t("generics.reset_password") }}</a-button
+                    >{{ $t("reset_password.base") }}</a-button
                   >
                 </a-menu-item>
                 <a-menu-item @click="toogleAdmin(account)">
@@ -212,8 +212,8 @@ export default {
       this.updateAccount(
         this.selectedAccount.uid,
         { password: password },
-        this.$t("generics.reset_password_success"),
-        this.$t("generics.reset_password_error")
+        this.$t("reset_password.reset_success"),
+        this.$t("reset_password.reset_error")
       );
     },
   },

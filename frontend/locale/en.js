@@ -14,13 +14,11 @@ export default {
     enable: "Enable",
     disable: "Disable",
     delete: "Delete",
+    reset: "Reset",
     admin: "Admin",
     enabled: "Enabled",
     actions: "Actions",
-    title: "Title",
-    reset_password: "Reset password",
-    reset_password_success: "Password changed successfuly",
-    reset_password_error: "Reset password failed"
+    title: "Title"
   },
 
   login_page: {
@@ -121,5 +119,17 @@ export default {
 
     ns_restore_success: "Namespace successfuly restored!",
     ns_restore_error: "Error restoring namespace {name}!"
+  },
+
+  reset_password: {
+    base: "Reset password",
+    reset_success: "Password changed successfuly",
+    reset_error: "Reset password failed",
+    reset_account_base: "Reset {name} password",
+    password_placeholder: "Enter password",
+    confirm_password_placeholder: "Confirm password",
+    password_required_msg: "Fill in the new password, please",
+    confirm_required_msg: "Please, confirm the password",
+    dont_match_msg: "Passwords don't match"
   }
 };

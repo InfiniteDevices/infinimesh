@@ -1,17 +1,23 @@
 <template>
   <a-modal
     :visible="active"
-    :title="`Reset ${account.name} password`"
-    okText="Reset"
+    :title="$t('reset_password.reset_account_base', account)"
+    :okText="$t('generics.reset')"
     @ok="handleSubmit"
     @cancel="() => $emit('cancel')"
   >
     <a-form-model :model="model" :rules="rules" ref="resetAccountPasswordForm">
       <a-form-model-item prop="password" label="Password">
-        <a-input-password placeholder="Enter password" v-model="model.password" />
+        <a-input-password
+          :placeholder="$t('reset_password.password_placeholder')"
+          v-model="model.password"
+        />
       </a-form-model-item>
       <a-form-model-item prop="confirm_password" label="Confirm">
-        <a-input-password placeholder="Confirm password" v-model="model.confirm_password" />
+        <a-input-password
+          :placeholder="$t('reset_password.confirm_password_placeholder')"
+          v-model="model.confirm_password"
+        />
       </a-form-model-item>
     </a-form-model>
   </a-modal>
@@ -32,15 +38,21 @@ export default {
       model: {},
       rules: {
         password: [
-          { required: true, message: "Fill in the new password, please" },
+          {
+            required: true,
+            message: this.$t("reset_password.password_required_msg"),
+          },
         ],
         confirm_password: [
-          { required: true, message: "Please, confirm the password" },
+          {
+            required: true,
+            message: this.$t("reset_password.confirm_required_msg"),
+          },
           {
             validator: (rule, value, raise) => {
               if (value != this.model.password) raise("oh noo");
             },
-            message: "Passwords don't match",
+            message: this.$t("reset_password.dont_match_msg"),
           },
         ],
       },
