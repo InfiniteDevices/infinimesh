@@ -128,33 +128,32 @@
 import NamespaceAdd from "@/components/namespace/Add";
 import NamespacePermissionsTable from "@/components/namespace/PermissionsTable";
 
-const namespaces_table_columns = [
-  {
-    title: "Title",
-    dataIndex: "name",
-    sorter: true,
-    scopedSlots: { customRender: "name" },
-  },
-  {
-    title: "ID",
-    dataIndex: "id",
-    sorter: true,
-    scopedSlots: { customRender: "id" },
-  },
-  {
-    title: "Actions",
-    key: "actions",
-    width: "10%",
-    scopedSlots: { customRender: "actions" },
-  },
-];
-
 export default {
   components: {
     NamespaceAdd,
     NamespacePermissionsTable,
   },
   data() {
+    const namespaces_table_columns = [
+      {
+        title: this.$t("generics.title"),
+        dataIndex: "name",
+        sorter: true,
+        scopedSlots: { customRender: "name" },
+      },
+      {
+        title: "ID",
+        dataIndex: "id",
+        sorter: true,
+        scopedSlots: { customRender: "id" },
+      },
+      {
+        title: this.$t("generics.actions"),
+        key: "actions",
+        width: "10%",
+        scopedSlots: { customRender: "actions" },
+      },
+    ];
     return {
       namespaces_table_columns,
       loading: false,

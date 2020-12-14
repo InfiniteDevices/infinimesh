@@ -129,39 +129,6 @@ import AccountResetPassword from "@/components/account/ResetPassword.vue";
 
 import AccountControlMixin from "@/mixins/account-control";
 
-const columns = [
-  {
-    title: "Username",
-    dataIndex: "name",
-    sorter: true,
-    scopedSlots: { customRender: "name" },
-  },
-  {
-    title: "ID",
-    dataIndex: "uid",
-    sorter: true,
-    scopedSlots: { customRender: "uid" },
-  },
-  {
-    title: "Admin",
-    dataIndex: "is_admin",
-    sorter: true,
-    scopedSlots: { customRender: "is_admin" },
-  },
-  {
-    title: "Enabled",
-    dataIndex: "enabled",
-    sorter: true,
-    scopedSlots: { customRender: "enabled" },
-  },
-  {
-    title: "Actions",
-    key: "actions",
-    fixed: "right",
-    scopedSlots: { customRender: "actions" },
-  },
-];
-
 export default {
   mixins: [AccountControlMixin],
   components: {
@@ -174,7 +141,38 @@ export default {
     },
   },
   data() {
-    columns[0].title = this.$t("generics.username_cap");
+    const columns = [
+      {
+        title: this.$t("generics.username_cap"),
+        dataIndex: "name",
+        sorter: true,
+        scopedSlots: { customRender: "name" },
+      },
+      {
+        title: "ID",
+        dataIndex: "uid",
+        sorter: true,
+        scopedSlots: { customRender: "uid" },
+      },
+      {
+        title: this.$t("generics.admin"),
+        dataIndex: "is_admin",
+        sorter: true,
+        scopedSlots: { customRender: "is_admin" },
+      },
+      {
+        title: this.$t("generics.enabled"),
+        dataIndex: "enabled",
+        sorter: true,
+        scopedSlots: { customRender: "enabled" },
+      },
+      {
+        title: this.$t("generics.actions"),
+        key: "actions",
+        fixed: "right",
+        scopedSlots: { customRender: "actions" },
+      },
+    ];
     return {
       columns,
       accounts: [],

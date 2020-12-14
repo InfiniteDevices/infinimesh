@@ -17,6 +17,7 @@ export default {
     admin: "Admin",
     enabled: "Enabled",
     actions: "Actions",
+    title: "Title",
     reset_password: "Reset password",
     reset_password_success: "Password changed successfuly",
     reset_password_error: "Reset password failed"
