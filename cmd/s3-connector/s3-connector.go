@@ -33,25 +33,14 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-const (
-	sourceTopicReported = "shadow.reported-state.full"
-	sourceTopicDesired  = "shadow.desired-state.full"
-	consumerGroup       = "s3-persister"
-)
-
 var (
-	broker         string
-	s3Host         int
-	s3MergerClient s3mergerpb.S3ReposClient
+	s3Host int
 )
 
 func init() {
 	sarama.Logger = log.New(os.Stdout, "", log.Ltime)
-	viper.SetDefault("KAFKA_HOST", "localhost:9092")
-	viper.SetDefault("KAFKA_CONSUMER_GROUP", "s3-persister")
 	viper.SetDefault("S3_Host", "8084")
 	viper.AutomaticEnv()
-	broker = viper.GetString("KAFKA_HOST")
 	s3Host = viper.GetInt("S3_Host")
 
 	//consumerGroup = viper.GetString("KAFKA_CONSUMER_GROUP")
