@@ -18,19 +18,18 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"log"
-	"net"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/Shopify/sarama"
 	log1 "github.com/infinimesh/infinimesh/pkg/log"
 	"github.com/infinimesh/infinimesh/pkg/s3merger"
 	"github.com/infinimesh/infinimesh/pkg/s3merger/s3mergerpb"
 	"github.com/spf13/viper"
-	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -41,7 +40,7 @@ const (
 
 var (
 	broker         string
-	s3Host         int
+	s3Host         string
 	s3MergerClient s3mergerpb.S3ReposClient
 )
 
@@ -49,10 +48,10 @@ func init() {
 	sarama.Logger = log.New(os.Stdout, "", log.Ltime)
 	viper.SetDefault("KAFKA_HOST", "localhost:9092")
 	viper.SetDefault("KAFKA_CONSUMER_GROUP", "s3-persister")
-	viper.SetDefault("S3_Host", "8084")
+	viper.SetDefault("S3_Host", "localhost:8084")
 	viper.AutomaticEnv()
 	broker = viper.GetString("KAFKA_HOST")
-	s3Host = viper.GetInt("S3_Host")
+	s3Host = viper.GetString("S3_Host")
 
 	//consumerGroup = viper.GetString("KAFKA_CONSUMER_GROUP")
 }
@@ -66,22 +65,70 @@ func main() {
 		_ = log1.Sync()
 	}()
 
-	log1.Info("starting s3connector")
-
-	server := s3merger.NewServer()
-	server.Log = log1.Named("s3merger server")
-
-	// gRPC client initialization
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", s3Host))
+	conn, err := grpc.Dial(s3Host, grpc.WithInsecure())
 	if err != nil {
-		log.Fatal("Failed to listen", s3Host, zap.Error(err))
+		log.Fatalln("unable to connect to S3_Host")
+	}
+	defer conn.Close()
+
+	s3MergerClient = s3mergerpb.NewS3ReposClient(conn)
+
+	config := sarama.NewConfig()
+	config.Consumer.Offsets.Initial = sarama.OffsetOldest
+	config.Consumer.Return.Errors = false
+	config.Version = sarama.V2_0_0_0
+	config.Producer.RequiredAcks = sarama.WaitForAll // Wait for all in-sync replicas to ack the message
+	config.Producer.Retry.Max = 10
+
+	client, err := sarama.NewClient([]string{broker}, config)
+	if err != nil {
+		panic(err)
 	}
 
-	s := grpc.NewServer()
-	s3mergerpb.RegisterS3ReposServer(s, server)
-	reflection.Register(s)
+	group, err := sarama.NewConsumerGroupFromClient(consumerGroup, client)
+	if err != nil {
+		panic(err)
+	}
+	log1.Info("s3merger consumer group created")
 
-	if err := s.Serve(lis); err != nil {
-		log.Fatal("Failed to serve gRPC", zap.Error(err))
+	handler := &s3merger.Consumer{
+		Log:                 log1.Named("S3 Connector Controller"),
+		ConsumerGroup:       consumerGroup,
+		SourceTopicDesired:  sourceTopicDesired,
+		SourceTopicReported: sourceTopicReported,
+		S3Client:            s3MergerClient,
+	}
+
+	c := make(chan os.Signal, 1)
+
+	signal.Notify(c, syscall.SIGINT)
+
+	done := make(chan bool, 1)
+
+	go func() {
+	outer:
+		for {
+
+			err = group.Consume(context.Background(), []string{sourceTopicDesired, sourceTopicReported}, handler)
+			log1.Info("messages reading")
+			if err != nil {
+				panic(err)
+			}
+
+			select {
+			case <-done:
+				break outer
+			default:
+			}
+
+		}
+
+	}()
+
+	<-c
+	done <- true
+	err = group.Close()
+	if err != nil {
+		panic(err)
 	}
 }
