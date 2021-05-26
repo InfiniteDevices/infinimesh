@@ -8,6 +8,7 @@ require (
 	github.com/Shopify/toxiproxy v2.1.3+incompatible // indirect
 	github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf // indirect
 	github.com/avast/retry-go v2.2.0+incompatible
+	github.com/aws/aws-sdk-go v1.38.46
 	github.com/birdayz/conjungo v1.0.1-0.20181127234741-4eb7246db343
 	github.com/cskr/pubsub v1.0.2
 	github.com/dgraph-io/dgo v0.0.0-20181226155115-a20f509ade83
@@ -38,7 +39,6 @@ require (
 	github.com/nicksnyder/go-i18n v1.10.0 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
-	github.com/pkg/errors v0.8.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a // indirect
 	github.com/rs/cors v1.6.0
 	github.com/spf13/cobra v0.0.3
@@ -55,6 +55,6 @@ require (
 	google.golang.org/grpc v1.31.1
 	google.golang.org/protobuf v1.23.0
 	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20180810215634-df19058c872c // indirect
-	gopkg.in/yaml.v2 v2.2.3
+	gopkg.in/yaml.v2 v2.2.8
 	robpike.io/filter v0.0.0-20150108201509-2984852a2183
 )
