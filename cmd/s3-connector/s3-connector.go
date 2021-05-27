@@ -35,13 +35,16 @@ import (
 
 var (
 	s3Host int
+	port   string
 )
 
 func init() {
 	sarama.Logger = log.New(os.Stdout, "", log.Ltime)
 	viper.SetDefault("S3_Host", "8084")
+	viper.SetDefault("PORT", "8080")
 	viper.AutomaticEnv()
 	s3Host = viper.GetInt("S3_Host")
+	port = viper.GetString("PORT")
 
 	//consumerGroup = viper.GetString("KAFKA_CONSUMER_GROUP")
 }
@@ -61,14 +64,16 @@ func main() {
 	server.Log = log1.Named("s3merger server")
 
 	// gRPC client initialization
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", s3Host))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", port))
 	if err != nil {
 		log.Fatal("Failed to listen", s3Host, zap.Error(err))
 	}
+	log1.Info("tcp listner started at port")
 
 	s := grpc.NewServer()
 	s3mergerpb.RegisterS3ReposServer(s, server)
 	reflection.Register(s)
+	log1.Info("s3merger server registered")
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatal("Failed to serve gRPC", zap.Error(err))
