@@ -17,7 +17,6 @@
 
 package s3merger
 
-/*
 import (
 	"context"
 	"fmt"
@@ -33,7 +32,7 @@ var (
 )
 
 func init() {
-	conn, err := grpc.Dial("localhost:8084", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:8091", grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
@@ -48,4 +47,3 @@ func TestSetGet(t *testing.T) {
 	require.NoError(t, err)
 	fmt.Println("device status updated", response.GetStatus())
 }
-*/

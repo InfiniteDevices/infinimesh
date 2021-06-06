@@ -48,7 +48,7 @@ func init() {
 	sarama.Logger = log.New(os.Stdout, "", log.Ltime)
 	viper.SetDefault("KAFKA_HOST", "localhost:9092")
 	viper.SetDefault("KAFKA_CONSUMER_GROUP", "s3-persister")
-	viper.SetDefault("S3_Host", "localhost:8084")
+	viper.SetDefault("S3_Host", "localhost:8091")
 	viper.AutomaticEnv()
 	broker = viper.GetString("KAFKA_HOST")
 	s3Host = viper.GetString("S3_Host")
